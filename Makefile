@@ -51,14 +51,14 @@ STARTO := start.o
 OBJS	:= $(SRC:.c=.o)
 XOBJS	:= $(XSRC:.c=.xo)
 
-APP	:= example.elf
+APP	:= ds2vidplayer.elf
 
 all: $(APP)
-	$(OBJCOPY) -O binary $(APP) example.bin
-	$(OBJDUMP) -d $(APP) > example.dump
-	$(NM) $(APP) | sort > example.sym
-	$(OBJDUMP) -h $(APP) > example.map
-	$(DS2SDKPATH)/tools/makeplug example.bin d2vidplayer.plg
+	$(OBJCOPY) -O binary $(APP) ds2vidplayer.bin
+	$(OBJDUMP) -d $(APP) > ds2vidplayer.dump
+	$(NM) $(APP) | sort > ds2vidplayer.sym
+	$(OBJDUMP) -h $(APP) > ds2vidplayer.map
+	$(DS2SDKPATH)/tools/makeplug ds2vidplayer.bin d2vidplayer.plg
 
 $(APP):	$(EXTLIBS) depend $(XOBJS) $(OBJS) $(STARTO) $(LINKS)
 	$(CC) -nostdlib -static -T $(LINKS) $(LDFLAGS) -o $@ $(STARTO) $(XOBJS) $(OBJS) $(LIBS)
