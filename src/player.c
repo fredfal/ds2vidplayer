@@ -19,16 +19,10 @@
 #define MIN_USEFUL_BYTES 1
 
 /*****************************************************************************
- *               Local prototypes
- ****************************************************************************/
-
-static double msecond();
-
-/*****************************************************************************
  *        Main program
  ****************************************************************************/
 
-int player_main(char *input_file)
+int play_file(char *filename)
 {
 	int frameWidth;
 	int frameHeight;
@@ -55,9 +49,9 @@ int player_main(char *input_file)
  * Openning file
  ****************************************************************************/
 
-	fd_input_file = fopen(input_file, "rb");
+	fd_input_file = fopen(filename, "rb");
 	if (fd_input_file == NULL) {
-		printf("Error opening input file %s\n", input_file);
+		printf("Error opening input file %s\n", filename);
 		return(-1);
 	}
 
@@ -87,7 +81,6 @@ int player_main(char *input_file)
 
 	/* Fil the buffer */
 	aviBufferInit(fd_input_file, &frameWidth, &frameHeight, &frameRate, &numFrames);
-	printf("Avi file found  w=%d h=%d fps=%d nf=%d\n", frameWidth, frameHeight, frameRate, numFrames);
 
 /*****************************************************************************
  *        Output buffer initialisation
@@ -152,11 +145,6 @@ int player_main(char *input_file)
 		decode_result.frame_decoded = 0;
 		currentChunkData = aviGetCurrentChunk(&aviBuffer);
 
-		if (j % 50 == 0)
-		{
-			printf("%d %x %d\n", j,aviBuffer.readPointer, decode_result.used_bytes);
-		}
-
 		switch (currentChunkData.dataType) {
 			case AVI_DATATYPE_AUDIO:
 		 		mad_decode((unsigned char*)currentChunkData.currentPosition, audio_out_buffer, currentChunkData.amountLeft, &decode_result);
@@ -191,27 +179,8 @@ int player_main(char *input_file)
 			default:
 				aviUsedAmount(&aviBuffer, currentChunkData.amountLeft);
 		}
-	} while (1);
+	} while (!feof(fd_input_file) || aviBuffer.amountLeft > 0);
 
-/*****************************************************************************
- *     Flush decoder buffers
- ****************************************************************************/
-	do {
-
-		/* Fake vars */
-		int used_bytes;
-		double dectime;
-
-        	do {
-		    	//used_bytes = dec_main(NULL, out_buffer, -1, &xvid_dec_stats);
-        	} while(used_bytes>=0 && xvid_dec_stats.type <= 0);
-
-        	if (used_bytes < 0) {   /* XVID_ERR_END */
-            		break;
-        	}
-
-	} while(1);
-	
 /*****************************************************************************
  *      Xvid PART  Stop
  ****************************************************************************/
@@ -224,20 +193,6 @@ int player_main(char *input_file)
  free_all_memory:
 	free(audio_out_buffer);
 	free(video_out_buffer);
-	//free(raw_video_buffer);
 
 	return(0);
-}
-
-/*****************************************************************************
- *               "helper" functions
- ****************************************************************************/
-
-/* return the current time in milli seconds */
-static double
-msecond()
-{	
-	struct timeval  tv;
-	gettimeofday(&tv, 0);
-	return((double)tv.tv_sec*1.0e3 + (double)tv.tv_usec*1.0e-3);
 }

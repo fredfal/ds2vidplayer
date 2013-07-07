@@ -21,8 +21,8 @@ void ds2_main(void)
 	if (err) goto _failure;
 
 	//Initial console for printf funciton
-	err = ConsoleInit(WHITE_COLOR, BLACK_COLOR, UP_SCREEN, 1);
-	if (err) goto _failure;
+	//err = ConsoleInit(WHITE_COLOR, BLACK_COLOR, UP_SCREEN, 1);
+	//if (err) goto _failure;
 
 	//Initial file system
 	err = fat_init();
@@ -31,9 +31,16 @@ void ds2_main(void)
 	mxucr = enable_jz4740_mxu();
 	enable_jz4740_ipu();
 
-	//go to user main funtion
-	main(0, 0);
+        ds2_setCPUclocklevel(13);
+        printf_clock();
 
+        gui_init();
+
+	while (1) {
+		menu();
+	}
+
+        play_file("fat:/test.avi");
 _failure:
 	printf("some error\n");
 	while(1);

@@ -22,16 +22,19 @@ ZLIB_DIR = $(DS2SDKPATH)/libsrc/zlib
 XVID_DIR = $(SRC_DIR)/extlibs/libxvid/xvidcore/src
 MAD_DIR = $(SRC_DIR)/extlibs/libmad/libmad-0.15.1b
 
-SRC := $(SRC_DIR)/main.c \
-	$(SRC_DIR)/ds2_main.c \
+SRC := $(SRC_DIR)/ds2_main.c \
 	$(SRC_DIR)/video.c \
 	$(SRC_DIR)/avi_buffer.c\
 	$(SRC_DIR)/player.c \
 	$(SRC_DIR)/sound.c \
+	$(SRC_DIR)/configfile.c \
+	$(SRC_DIR)/gui/bdf_font.c \
+	$(SRC_DIR)/gui/bitmap.c \
+	$(SRC_DIR)/gui/draw.c \
+	$(SRC_DIR)/gui/gui.c
 
 XSRC := $(SRC_DIR)/jz4740_specific.c
 	
-
 EXTLIBS := -lxvidcore -lmad
 LIBS := $(EXTLIBS) -lds2a -lds2b -lm -lc -lgcc
 

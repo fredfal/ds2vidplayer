@@ -72,7 +72,7 @@ int video_display_frame(unsigned char *image)
 	unsigned short *dst;
 	unsigned short *end_buff;
 
-	dst = down_screen_addr;
+	dst = up_screen_addr;
 	buff = image;
         end_buff = buff + SCREEN_WIDTH*SCREEN_HEIGHT;
 
@@ -81,7 +81,7 @@ int video_display_frame(unsigned char *image)
                 buff++;
         } while (buff < end_buff);
 
-	ds2_flipScreen(DOWN_SCREEN, 0);
+	ds2_flipScreen(UP_SCREEN, 0);
 	return 0;
 }
 
