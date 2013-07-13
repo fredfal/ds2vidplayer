@@ -11,32 +11,33 @@
 
 struct ipu_module
 {
-  unsigned int reg_ctrl;      // 0x0
-  unsigned int reg_status;    // 0x4
-  unsigned int reg_d_fmt;     // 0x8
-  unsigned int reg_y_addr;    // 0xc
-  unsigned int reg_u_addr;    // 0x10
-  unsigned int reg_v_addr;    // 0x14
-  unsigned int reg_in_fm_gs;  // 0x18
-  unsigned int reg_y_stride;  // 0x1c
-  unsigned int reg_uv_stride; // 0x20
-  unsigned int reg_out_addr;  // 0x24
-  unsigned int reg_out_gs;    // 0x28
-  unsigned int reg_out_stride;// 0x2c
-  unsigned int rsz_coef_index;// 0x30
-  unsigned int reg_csc_c0_coef;      // 0x34
-  unsigned int reg_csc_c1_coef;      // 0x38
-  unsigned int reg_csc_c2_coef;      // 0x3c
-  unsigned int reg_csc_c3_coef;      // 0x40
-  unsigned int reg_csc_c4_coef;      // 0x44
-  unsigned int hrsz_coef_lut[20];    // 0x48
-  unsigned int vrsz_coef_lut[20];    // 0x98
+  unsigned int reg_ctrl;	// 0x0
+  unsigned int reg_status;	// 0x4
+  unsigned int reg_d_fmt;	// 0x8
+  unsigned int reg_y_addr;	// 0xc
+  unsigned int reg_u_addr;	// 0x10
+  unsigned int reg_v_addr;	// 0x14
+  unsigned int reg_in_fm_gs;	// 0x18
+  unsigned int reg_y_stride;	// 0x1c
+  unsigned int reg_uv_stride;	// 0x20
+  unsigned int reg_out_addr;	// 0x24
+  unsigned int reg_out_gs;	// 0x28
+  unsigned int reg_out_stride;	// 0x2c
+  unsigned int rsz_coef_index;	// 0x30
+  unsigned int reg_csc_c0_coef;	// 0x34
+  unsigned int reg_csc_c1_coef;	// 0x38
+  unsigned int reg_csc_c2_coef;	// 0x3c
+  unsigned int reg_csc_c3_coef;	// 0x40
+  unsigned int reg_csc_c4_coef;	// 0x44
+  unsigned int hrsz_coef_lut[20];	// 0x48
+  unsigned int vrsz_coef_lut[20];	// 0x98
 };
 
-typedef struct {
-   unsigned int coef;
-   unsigned short int in_n;
-   unsigned short int out_n;
+typedef struct
+{
+  unsigned int coef;
+  unsigned short int in_n;
+  unsigned short int out_n;
 } rsz_lut;
 
 struct Ration2m
@@ -124,11 +125,11 @@ struct Ration2m
 // B = 1.164 * (Y - 16) + 2.017 * (cb - 128)    {C0, C4}
 
 #if 1
-#define YUV_CSC_C0 0x4A8        /* 1.164 * 1024 */
-#define YUV_CSC_C1 0x662        /* 1.596 * 1024 */
-#define YUV_CSC_C2 0x191        /* 0.392 * 1024 */
-#define YUV_CSC_C3 0x341        /* 0.813 * 1024 */
-#define YUV_CSC_C4 0x811        /* 2.017 * 1024 */
+#define YUV_CSC_C0 0x4A8	/* 1.164 * 1024 */
+#define YUV_CSC_C1 0x662	/* 1.596 * 1024 */
+#define YUV_CSC_C2 0x191	/* 0.392 * 1024 */
+#define YUV_CSC_C3 0x341	/* 0.813 * 1024 */
+#define YUV_CSC_C4 0x811	/* 2.017 * 1024 */
 #else
 #define YUV_CSC_C0 0x400
 #define YUV_CSC_C1 0x59C

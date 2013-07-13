@@ -1,33 +1,66 @@
+/* bitmap.c
+ *
+ * Copyright (C) 2010 dking <dking024@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public Licens e as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
 #ifndef __BITMAP_H__
 #define __BITMAP_H__
-
-#include "stdio.h"
-#include "image.h"
+#include "ds2_types.h"
 #include "fs_api.h"
 
-typedef struct _pixelmapheader{
-	unsigned int		imHeadsize;	//Bitmap information header size
-	unsigned int		imBitmapW;	//bitmap width in pixel
-	unsigned int		imBitmapH;	//bitmap height in pixel
-	unsigned short		imPlanes;	//bitmap planes numbers, must be set to 1
-	unsigned short		imBitpixel;	//bits per pixel
-	unsigned int		imCompess;	//compress method
-	unsigned int		imImgsize;	//image size, times of 4-byte
-	unsigned int		imHres;		//horizontal resolution, pixel/metel
-	unsigned int		imVres;		//vertical resolution, pixel/metel
-	unsigned int		imColnum;	//number of colors in color palette, 0 to exp(2)
-	unsigned int		imImcolnum;	//important colors numbers used
-} IMAGEHEADER;
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+  typedef struct _pixelmapheader
+  {
+    u32 imHeadsize;		//Bitmap information header size
+    u32 imBitmapW;		//bitmap width in pixel
+    u32 imBitmapH;		//bitmap height in pixel
+    u16 imPlanes;		//bitmap planes numbers, must be set to 1
+    u16 imBitpixel;		//bits per pixel
+    u32 imCompess;		//compress method
+    u32 imImgsize;		//image size, times of 4-byte
+    u32 imHres;			//horizontal resolution, pixel/metel
+    u32 imVres;			//vertical resolution, pixel/metel
+    u32 imColnum;		//number of colors in color palette, 0 to exp(2)
+    u32 imImcolnum;		//important colors numbers used
+  } IMAGEHEADER;
 
 
-typedef struct _bitmapfileheader{
-	unsigned short		bfType;		//BMP file types
-	unsigned int		bfSize;		//BMP file size(Not the pixel image size)
-	unsigned short		bfReserved0;//reserved area0
-	unsigned short		bfReserved1;//reserved area1
-	unsigned int		bfImgoffst;	//pixel data area offset
-	IMAGEHEADER bfImghead;
-} BMPHEADER;
+  typedef struct _bitmapfileheader
+  {
+    u16 bfType;			//BMP file types
+    u32 bfSize;			//BMP file size(Not the pixel image size)
+    u16 bfReserved0;		//reserved area0
+    u16 bfReserved1;		//reserved area1
+    u32 bfImgoffst;		//pixel data area offset
+    IMAGEHEADER bfImghead;
+  } BMPHEADER;
+
+
+  typedef struct _bitmapInfo
+  {
+    FILE *fp;
+    BMPHEADER bmpHead;
+  } BMPINFO;
+
+//#define NULL 0
 
 //compression method
 /* Value Identified by 	Compression method 		Comments
@@ -41,12 +74,12 @@ typedef struct _bitmapfileheader{
 #define BI_RGB			0
 #define BI_RLE8			1
 #define BI_RLE4			2
-#define BI_BITFIELDS	 	3
+#define BI_BITFIELDS 	3
 #define BI_JPEG			4
 #define BI_PNG			5
 
 //error message
-#define BMP_OK			0
+#define BMP_OK				0
 #define BMP_ERR_OPENFAILURE	1
 #define BMP_ERR_FORMATE		2
 #define BMP_ERR_NOTSUPPORT	3
@@ -55,6 +88,29 @@ typedef struct _bitmapfileheader{
 
 #define FILEOPENCHECK(fp)		(fp!=NULL)
 
-extern image_data_s *BMP_read(void* fp, int max_width, int max_height, size_t (*fread_fonction)(void *ptr, size_t size, size_t nmemb, void *stream), int (*fseek_function)(void *stream, long offset, int whence), image_data_s *image_data);
 
-#endif //__BITMAP_H__
+  extern int BMP_read (char *filename, char *buf, unsigned int width,
+		       unsigned int height, unsigned int *type);
+
+/*
+*	open BMP file
+*/
+  extern int openBMP (BMPINFO * bmpInfo, const char *file);
+
+/*
+*	read pixel form BMP file
+*/
+  extern int readBMP (BMPINFO * bmpInfo, unsigned int start_x,
+		      unsigned int start_y, unsigned int width,
+		      unsigned int height, void *buffer);
+
+/*
+*	close BMP file
+*/
+  extern void closeBMP (BMPINFO * bmpInfo);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif				//__BITMAP_H__

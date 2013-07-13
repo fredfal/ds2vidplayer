@@ -1,0 +1,20 @@
+#ifndef __GUI_ACTION_H__
+#define __GUI_ACTION_H__
+
+typedef enum
+{
+  CURSOR_NONE = 0,
+  CURSOR_UP,
+  CURSOR_DOWN,
+  CURSOR_LEFT,
+  CURSOR_RIGHT,
+  CURSOR_SELECT,
+  CURSOR_BACK,
+  CURSOR_EXIT,
+  CURSOR_RTRIGGER,
+  CURSOR_LTRIGGER,
+  CURSOR_KEY_SELECT,
+  CURSOR_TOUCH
+} gui_action_type;
+
+#endif

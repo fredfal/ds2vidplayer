@@ -4,12 +4,13 @@
 typedef enum
 { DEPTH_8BIT, DEPTH_24BIT } image_depth_e;
 
-typedef struct {
-    image_depth_e depth;
-    int width;
-    int height;
-    int error_code;
-    char *data;
+typedef struct
+{
+  image_depth_e depth;
+  int width;
+  int height;
+  int error_code;
+  char *data;
 } image_data_s;
 
 #define RGB24_15(pixel) ((((*pixel) & 0xF8) << 7) |\

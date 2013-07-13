@@ -19,7 +19,8 @@
 unsigned int enable_jz4740_mxu ();
 unsigned int disable_jz4740_mxu (unsigned int mxucr);
 
-int frameconversion_jz4740_ipu(unsigned char* source_address, unsigned char* destination_address, int source_width, int source_height);
+int frameconversion_jz4740_ipu (unsigned char *source_address,
+				unsigned char *destination_address,
+				int source_width, int source_height);
 
 #endif
-

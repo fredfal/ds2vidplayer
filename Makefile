@@ -28,10 +28,13 @@ SRC := $(SRC_DIR)/ds2_main.c \
 	$(SRC_DIR)/player.c \
 	$(SRC_DIR)/sound.c \
 	$(SRC_DIR)/configfile.c \
-	$(SRC_DIR)/gui/bdf_font.c \
-	$(SRC_DIR)/gui/bitmap.c \
-	$(SRC_DIR)/gui/draw.c \
-	$(SRC_DIR)/gui/gui.c
+	$(SRC_DIR)/bdf_font.c \
+	$(SRC_DIR)/bitmap.c \
+	$(SRC_DIR)/draw.c \
+	$(SRC_DIR)/languagefile.c \
+	$(SRC_DIR)/main_menu.c \
+	$(SRC_DIR)/loadfile_menu.c \
+	$(SRC_DIR)/gui.c
 
 XSRC := $(SRC_DIR)/jz4740_specific.c
 	
